@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增文章</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+</head>
+<body>
+    <div id="one_third" class="summernote"></div>
+    <div id="full_content" class="summernote"></div>
+    <button id="cancel" class="btn " type="button">取消編輯</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button id="draw" class="btn btn-primary" type="button" data-post-type="draw">存成草稿</button>&nbsp;&nbsp;
+    <button id="under_review" class="btn btn-primary" type="button" data-post-type="under_review">文章送審</button>
+
+<script>
+$(function() {
+
+    var save = function() {
+        if ($('#one_third').summernote('isEmpty')) {
+            alert('文章摘要請勿空白');
+            return false;
+        }
+
+        if ($('#full_content').summernote('isEmpty')) {
+            alert('文章內容請勿空白');
+            return false;
+        }
+
+        var one_third_makrup = $('#one_third').summernote('code'),
+            full_content_makrup = $('#full_content').summernote('code'),
+            post_type = $(this).data('post-type');
+        console.log(one_third_makrup);
+        console.log(full_content_makrup);
+        console.log(post_type);
+    },
+    common_option = {
+        toolbar: [
+            ['codeview', ['codeview']],
+            ['action', ['undo', 'redo']],
+            ['style', ['style', 'bold', 'italic', 'underline', 'strikethrough', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'hr']]
+        ],
+        lang: 'zh-TW',
+        disableDragAndDrop: true
+    },
+    full_content_opt = $.extend({}, common_option, {placeholder: '文章內容...'}),
+    one_third_opt = $.extend({}, common_option, {placeholder: '文章摘要...'});
+
+    // initial
+    $('#full_content').summernote( full_content_opt );
+    $('#one_third').summernote( one_third_opt );
+
+    // saving
+    $('#under_review, #draw').on('click', save);
+
+});
+
+</script>
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/lang/summernote-zh-TW.js"></script>
+
+</body>
+</html>
